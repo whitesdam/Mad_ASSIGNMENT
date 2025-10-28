@@ -7,6 +7,9 @@ import SignUpScreen from '../SignUpScreen';
 import NicknameScreen from '../NicknameScreen';
 import WelcomeScreen from '../WelcomeScreen';
 import OutfitGeneratorScreen from '../OutfitGeneratorScreen';
+import BottomTabs from '../navigation/BottomTabs'; 
+import ProfileScreen from '../ProfileScreen'; 
+
 
 
 
@@ -29,6 +32,8 @@ export default function AppNavigator() {
           options={{ title: 'Forgot Password' }}
         />
         <Stack.Screen name="SignUp" component={SignUpScreen} />
+        
+
         <Stack.Screen
   name="NicknameScreen"
   component={NicknameScreen}
@@ -42,6 +47,13 @@ export default function AppNavigator() {
   component={OutfitGeneratorScreen}
   options={{ headerShown: false }}
 />
+<Stack.Screen 
+  name="MainTabs" 
+  component={BottomTabs} 
+  options={{ headerShown: false }} 
+/>
+<Stack.Screen name="Profile" component={ProfileScreen} />
+
 
       </Stack.Navigator>
     </NavigationContainer>

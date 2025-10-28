@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList, Image, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Picker } from '@react-native-picker/picker'; // Or your preferred picker
+import { Picker } from '@react-native-picker/picker';
 import Slider from '@react-native-community/slider';
 
 const OUTFIT_OPTIONS = [
@@ -21,7 +21,7 @@ const OUTFIT_OPTIONS = [
   },
 ];
 
-export default function OutfitGeneratorScreen() {
+export default function OutfitGeneratorScreen({ navigation }) {
   const [occasion, setOccasion] = useState('Casual Outing');
   const [weather, setWeather] = useState('Mild (15-25°C)');
   const [formality, setFormality] = useState(50);
@@ -30,13 +30,11 @@ export default function OutfitGeneratorScreen() {
     <View style={styles.baseContainer}>
       {/* Header */}
       <View style={styles.headerRow}>
-        <TouchableOpacity>
-          {/* Replace with your back icon */}
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Text style={styles.headerIcon}>←</Text>
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Outfit Generator</Text>
         <TouchableOpacity>
-          {/* Replace with your settings icon */}
           <Text style={styles.headerIcon}>⚙️</Text>
         </TouchableOpacity>
       </View>
@@ -91,11 +89,16 @@ export default function OutfitGeneratorScreen() {
         </View>
 
         {/* Gradient Button */}
-        <TouchableOpacity activeOpacity={0.85} style={styles.buttonOuter}>
+        <TouchableOpacity
+          activeOpacity={0.85}
+          style={styles.buttonOuter}
+          onPress={() => navigation.navigate('OutfitDetails')}
+        >
           <LinearGradient
             colors={['#a4508b', '#f86647']}
             style={styles.gradientButton}
-            start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}>
+            start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}
+          >
             <Text style={styles.buttonText}>Generate Outfit</Text>
           </LinearGradient>
         </TouchableOpacity>

@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import UserContext from '../../UserContext'; // Adjust path if needed
 
 function NicknameScreen({ navigation }) {
-  const [nickname, setNickname] = useState('');
+  const [nicknameInput, setNicknameInput] = useState('');
+  const { setNickname } = useContext(UserContext);
 
   const onSubmit = () => {
-    if (nickname.trim().length > 0) {
-      navigation.navigate('WelcomeScreen', { nickname });
+    if (nicknameInput.trim()) {
+      setNickname(nicknameInput);
+      navigation.navigate('WelcomeScreen');
     }
   };
 
@@ -16,8 +19,8 @@ function NicknameScreen({ navigation }) {
       <TextInput
         style={styles.input}
         placeholder="Enter nickname"
-        value={nickname}
-        onChangeText={setNickname}
+        value={nicknameInput} // CORRECT VARIABLE HERE
+        onChangeText={setNicknameInput}
         placeholderTextColor="#999"
       />
       <TouchableOpacity style={styles.button} onPress={onSubmit}>

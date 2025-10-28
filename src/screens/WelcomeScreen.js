@@ -1,59 +1,91 @@
-import React, { useRef, useEffect } from 'react';
-import { View, Animated, StyleSheet, Dimensions } from 'react-native';
-
-const { width, height } = Dimensions.get('window');
-
+import React, { useContext } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import UserContext from '../../UserContext';
 function WelcomeScreen({ route, navigation }) {
-  const { nickname } = route.params;
-  const animValue = useRef(new Animated.Value(0)).current;
+  const { nickname } = useContext(UserContext);
 
-  useEffect(() => {
-  Animated.timing(animValue, {
-    toValue: 1,
-    duration: 2000,
-    useNativeDriver: false,
-  }).start(() => {
-    navigation.replace('OutfitGenerator'); // <-- Add here
-  });
-}, []);
+  // Dummy SVG icons, use your own assets or react-native-vector-icons 
+  // Replace with your SVG or PNG images for men/women!
+  const menIcon = require('../../assets/men.png'); // Place in assets folder
+  const womenIcon = require('../../assets/women.png'); // Place in assets folder
 
+  const handleSelect = (gender) => {
+    // Pass gender and nickname if needed
+   navigation.replace('MainTabs', { gender, nickname });
 
-  const left = animValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: [width / 2 - 100, 20],
-  });
-
-  const top = animValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: [height / 2 - 20, 40],
-  });
-
-  const fontSize = animValue.interpolate({
-    inputRange: [0, 1],
-    outputRange: [32, 16],
-  });
+  };
 
   return (
-    <View style={styles.container}>
-      <Animated.Text
-        style={[
-          styles.welcomeText,
-          { position: 'absolute', left, top, fontSize },
-        ]}
-      >
-        Welcome {nickname}
-      </Animated.Text>
+    <View style={styles.mainContainer}>
+      <View style={styles.welcomeBox}>
+        <Text style={styles.welcomeTitle}>Let's personalize{'\n'}your style!</Text>
+      </View>
+
+      <View style={styles.optionsRow}>
+        <TouchableOpacity style={styles.optionCard} onPress={() => handleSelect('Men')}>
+          <Image source={menIcon} style={styles.iconImg} />
+          <Text style={styles.optionLabel}>Men</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.optionCard} onPress={() => handleSelect('Women')}>
+          <Image source={womenIcon} style={styles.iconImg} />
+          <Text style={styles.optionLabel}>Women</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     flex: 1,
     backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 26,
   },
-  welcomeText: {
+  welcomeBox: {
+    backgroundColor: '#f4edfa',
+    borderRadius: 16,
+    padding: 16,
+    marginBottom: 36,
+    alignItems: 'center',
+    width: '100%',
+  },
+  welcomeTitle: {
+    fontSize: 22,
+    color: '#353c50',
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  optionsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: "100%",
+  },
+  optionCard: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#f8f6fa',
+    borderRadius: 17,
+    marginHorizontal: 10,
+    paddingVertical: 24,
+    shadowColor: "#c6b5ef",
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.14,
+    shadowRadius: 8,
+    elevation: 5,
+  },
+  iconImg: {
+    width: 54,
+    height: 54,
+    marginBottom: 10,
+    resizeMode: "contain",
+  },
+  optionLabel: {
+    fontSize: 17,
+    color: '#202222',
     fontWeight: 'bold',
+    marginTop: 2,
   },
 });
 

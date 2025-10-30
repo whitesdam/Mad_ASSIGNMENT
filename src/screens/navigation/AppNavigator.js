@@ -9,6 +9,7 @@ import WelcomeScreen from '../WelcomeScreen';
 import OutfitGeneratorScreen from '../OutfitGeneratorScreen';
 import BottomTabs from '../navigation/BottomTabs'; 
 import ProfileScreen from '../ProfileScreen'; 
+import WardrobeScreen from '../WardrobeScreen';
 
 
 
@@ -53,6 +54,8 @@ export default function AppNavigator() {
   options={{ headerShown: false }} 
 />
 <Stack.Screen name="Profile" component={ProfileScreen} />
+<Stack.Screen name="Wardrobe" component={WardrobeScreen} />
+
 
 
       </Stack.Navigator>
